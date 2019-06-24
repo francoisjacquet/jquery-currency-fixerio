@@ -1,91 +1,172 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
-    <meta charset="utf-8" />
-    
-    <title>jQuery Currency - Simple, unobtrusive currency converting and formatting</title>
-    <meta name="description" content="Simple, unobtrusive currency converting and formatting in jQuery.">
-    
-    <link rel="stylesheet" href="style.css" type="text/css" media="screen" />
-    <!--<link rel="shortcut icon" href="favicon.ico">-->
-    
-    <!--[if IE]>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<script type="text/javascript" src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <script src="scripts/modernizr-1.7.min.js"></script>
- 
+	<meta charset="utf-8" />
+
+	<title>jQuery Currency fixer.io - Simple, unobtrusive currency converting and formatting. Uses PHP & fixer.io API for conversions.</title>
+	<meta name="description" content="Simple, unobtrusive currency converting and formatting in jQuery. Uses PHP & fixer.io API for conversions.">
+
+	<link rel="stylesheet" href="style.css" />
 </head>
 <body>
+	<div id="wrapper">
+		<header>
+			<h1>jQuery Currency fixer.io Demo</h1>
+			<p>Simple, unobtrusive currency converting and formatting. Uses PHP & <a href="https://fixer.io/" target="_blank">fixer.io</a> API for conversions.</p>
+		</header>
 
-    <div id="wrapper">
+		<section id="content">
+			<h3>$("#basic").currency();</h3>
+			<p>123456.34098 becomes <span id="basic">123456.34098</span></p>
 
-        <header>
-            
-            <h1>jQuery Currency Demo</h1>
-            <p>Simple, unobtrusive currency converting and formatting.</p>
-        
-        </header>
-        
-        <section id="content">
-        
-            <h3>$("#basic").currency();</h3>
-            <p>123456.34098 becomes <span id="basic">123456.34098</span></p>
-            
-            <h3>$("#input").currency();</h3>
-            <p><input type="text" value="123456.34098" /> becomes <input type="text"  id="input" value="123456.34098" /></p>
-            
-            <h3>$("#advanced").currency({ region: "GBP", thousands: ",", decimal: ",", decimals: 3 });</h3>
-            <p>123456.34098 becomes <span id="advanced">123456.34098</span></p>
-            
-            <h3>$(".multiple").currency();</h3>
-            <p>123456.34098 becomes <span class="multiple">123456.34098</span></p>
-            <p>987654.321 becomes <span class="multiple">987654.321</span></p>
-            <p>-34.57 becomes <span class="multiple">-34.57</span></p>
-            
-            <h3>$("#convert").currency({ region: "GBP", convertFrom: "EUR" });</h3>
-            <p>12456.89 becomes <span id="convert">12456.89</span></p>
-            <p class="desc">Note conversion requires the use of a PHP file (sample attached)</p>
+			<h3>$("#input").currency();</h3>
+			<p><input type="text" value="123456.34098" /> becomes <input type="text"  id="input" value="123456.34098" /></p>
 
-<p>
-<center>
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- jQuery-Currency -->
-<ins class="adsbygoogle"
-     style="display:inline-block;width:728px;height:90px"
-     data-ad-client="ca-pub-1989418460154373"
-     data-ad-slot="1609558213"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-</center>
-</p>
-            
-        </section>
-        
-        <footer>
-            <p>jQuery Currency was updated by <a href="http://coderspress.com">sMarty</a> | Released under the MIT license |
-            <a href="http://github.com/CodersPress/jQuery-Currency">Download</a></p>
-        </footer>
-        
-    </div>
-    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="../jquery.currency.js"></script>
+			<h3>$("#advanced").currency({ region: "EUR", thousands: ",", decimal: ",", decimals: 3 });</h3>
+			<p>123456.34098 becomes <span id="advanced">123456.34098</span></p>
 
-    <script>
+			<h3>$(".multiple").currency();</h3>
+			<p>123456.34098 becomes <span class="multiple">123456.34098</span></p>
+			<p>987654.321 becomes <span class="multiple">987654.321</span></p>
+			<p>-34.57 becomes <span class="multiple">-34.57</span></p>
 
-    $(document).ready(function() {
-        $("#basic").currency();
-        $("#input").currency();
-        $("#advanced").currency({ region: "GBP", thousands: ",", decimal: ",", decimals: 3 });
-        $(".multiple").currency();
-        $("#convert").currency({ region: "GBP", convertFrom: "EUR", convertLocation: "../convert.php" });
-    });
+			<h3>$("#convert").currency({ region: "EUR", convertFrom: "GBP" });</h3>
+			<p>12456.89 becomes <span id="convert">12456.89</span></p>
+			<p class="desc">Note conversion requires the use of a PHP file (sample attached)</p>
 
-    </script>
-    
-    <a href="http://github.com/coderspress/jQuery-Currency"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+			<h3>$('#select').on('change', convertSelect); (check `convertSelect` function code in the source)</h3>
+			<p>12456.89 becomes <span id="convert-select">€12456.89</span>
+				<select id="select" autocomplete="off">
+					<option value="EUR">EUR</option>
+					<option value="USD">USD</option>
+					<option value="ARS">ARS</option>
+					<option value="AWG">AWG</option>
+					<option value="AUD">AUD</option>
+					<option value="BSD">BSD</option>
+					<option value="BBD">BBD</option>
+					<option value="BYR">BYR</option>
+					<option value="BZD">BZD</option>
+					<option value="BMD">BMD</option>
+					<option value="BOB">BOB</option>
+					<option value="BAM">BAM</option>
+					<option value="BWP">BWP</option>
+					<option value="BRL">BRL</option>
+					<option value="BND">BRL</option>
+					<option value="CAD">CAD</option>
+					<option value="KYD">KYD</option>
+					<option value="CLP">CLP</option>
+					<option value="CNY">CNY</option>
+					<option value="COP">COP</option>
+					<option value="CRC">CRC</option>
+					<option value="HRK">HRK</option>
+					<option value="CZK">CZK</option>
+					<option value="DKK">DKK</option>
+					<option value="DOP">DOP</option>
+					<option value="XCD">XCD</option>
+					<option value="EGP">EGP</option>
+					<option value="SVC">SVC</option>
+					<option value="EEK">EEK</option>
+					<option value="FKP">FKP</option>
+					<option value="FJD">FJD</option>
+					<option value="GBP">GBP</option>
+					<option value="GHC">GHC</option>
+					<option value="GIP">GIP</option>
+					<option value="GTQ">GTQ</option>
+					<option value="GGP">GGP</option>
+					<option value="GYD">GYD</option>
+					<option value="HNL">HNL</option>
+					<option value="HKD">HKD</option>
+					<option value="HUF">HUF</option>
+					<option value="ISK">ISK</option>
+					<option value="IDR">IDR</option>
+					<option value="IMP">IMP</option>
+					<option value="IND">IND</option>
+					<option value="JMD">JMD</option>
+					<option value="JPY">JPY</option>
+					<option value="JEP">JEP</option>
+					<option value="LVL">LVL</option>
+					<option value="LBP">LBP</option>
+					<option value="LRD">LRD</option>
+					<option value="LTL">LTL</option>
+					<option value="MYR">MYR</option>
+					<option value="MXN">MXN</option>
+					<option value="MZN">MZN</option>
+					<option value="NAD">NAD</option>
+					<option value="ANG">ANG</option>
+					<option value="NZD">NZD</option>
+					<option value="NIO">NIO</option>
+					<option value="NOK">NOK</option>
+					<option value="PAB">PAB</option>
+					<option value="PYG">PYG</option>
+					<option value="PEN">PEN</option>
+					<option value="PLN">PLN</option>
+					<option value="RON">RON</option>
+					<option value="SHP">SHP</option>
+					<option value="SGD">SGD</option>
+					<option value="SBD">SBD</option>
+					<option value="SOS">SOS</option>
+					<option value="ZAR">ZAR</option>
+					<option value="SEK">SEK</option>
+					<option value="CHF">CHF</option>
+					<option value="SRD">SRD</option>
+					<option value="SYP">SYP</option>
+					<option value="TWD">TWD</option>
+					<option value="TTD">TTD</option>
+					<option value="TRY">TRY</option>
+					<option value="TRL">TRL</option>
+					<option value="TVD">TVD</option>
+					<option value="UYU">UYU</option>
+					<option value="VEF">VEF</option>
+					<option value="ZWD">ZWD</option>
+				</select>
+			</p>
+			<p class="desc">Note conversion requires the use of a PHP file (sample attached)</p>
+		</section>
 
+		<footer>
+			<p>jQuery Currency fixer.io is released under the MIT license |
+			<a href="http://github.com/francoisjacquet/jquery-currency-fixerio">Download</a></p>
+		</footer>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="../jquery-currency-fixerio.js"></script>
+
+	<script>
+	$(document).ready(function() {
+		$("#basic").currency();
+		$("#input").currency();
+		$("#advanced").currency({ region: "EUR", thousands: ",", decimal: ",", decimals: 3 });
+		$(".multiple").currency();
+		$("#convert").currency({ region: "EUR", convertFrom: "GBP", convertLocation: "../convert.php" });
+
+		var convertSelect = function(e) {
+			var optionSelected = $("option:selected", this),
+				valueSelected = this.value;
+
+			// Check to see if the variable has been initialized.
+			if ( typeof convertSelect.convertFrom == 'undefined' ) {
+				// It has not... perform the initialization.
+				convertSelect.convertFrom = 'EUR';
+			}
+			console.log(convertSelect.convertFrom, valueSelected);
+
+			$("#convert-select").currency({
+				region: valueSelected,
+				convertFrom: convertSelect.convertFrom,
+				convertLocation: '../convert.php',
+				// decimals: 0
+			});
+
+			convertSelect.convertFrom = valueSelected;
+		};
+
+		$('#select').on('change', convertSelect);
+	});
+	</script>
+
+	<a href="http://github.com/francoisjacquet/jquery-currency-fixerio">
+		<img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub">
+	</a>
 </body>
 </html>
