@@ -42,7 +42,7 @@ if ( ! $rates
 	// No file yet or rates are not from today. Get them from API.
 	$rates = get_currency_rates_from_api( CURRENCY_API_KEY );
 
-	save_currency_rates_to_file( $rates, $file );
+	save_currency_rates_to_file( $rates, CURRENCY_FILE_PATH );
 }
 
 // var_dump($rates['rates']);
