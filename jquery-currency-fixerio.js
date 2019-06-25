@@ -110,7 +110,7 @@
 				if (bc == 'ISK') currency_before = 'kr';
 				if (bc == 'IDR') currency_before = 'Rp';
 				if (bc == 'IMP') currency_before = '&pound;';
-				if (bc == 'IND') currency_before = '&#8337';
+				if (bc == 'INR') currency_before = '&#8337';
 				if (bc == 'JMD') currency_before = 'J$';
 				if (bc == 'JPY') currency_before = '&yen;';
 				if (bc == 'JEP') currency_before = '&pound;';
