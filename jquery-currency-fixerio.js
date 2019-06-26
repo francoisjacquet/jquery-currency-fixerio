@@ -3,7 +3,7 @@
  * Simple, unobtrusive currency converting and formatting.
  * Uses fixer.io API & PHP
  *
- * @version 0.7
+ * @version 0.8
  * June 2019
  *
  * @copyright 2015 sMarty http://coderspress.com
@@ -13,6 +13,9 @@
  */
 
 (function($) {
+	// Static var shared.
+	var currencyRates = {};
+
 	$.fn.currency = function(method) {
 		var methods = {
 			init: function(options) {
@@ -32,37 +35,78 @@
 					if (settings.convertFrom != '') {
 
 						if ($element.is(':input')) {
-							$element.val(value + ' ' + settings.convertLoading);
+							$element.val(settings.convertLoading);
 						} else {
-							$element.html(value + ' ' + settings.convertLoading);
+							$element.html(settings.convertLoading);
 						}
 
-						$.post(settings.convertLocation, {
-							amount: value,
-							from: settings.convertFrom,
-							to: settings.region
-						}, function(data) {
-							value = data;
+						if (!currencyRates.loaded) {
+							$.get(settings.convertLocation, function(data) {
+								currencyRates = JSON.parse(data);
+								currencyRates['loaded'] = 1;
+
+								value = helpers.convert(value, settings.convertFrom, settings.region);
+
+								if ($element.is(':input')) {
+									$element.val(helpers.format_currency(value, settings));
+								} else {
+									$element.html(helpers.format_currency(value, settings));
+								}
+							});
+						} else {
+							value = helpers.convert(value, settings.convertFrom, settings.region);
+
 							if ($element.is(':input')) {
 								$element.val(helpers.format_currency(value, settings));
 							} else {
 								$element.html(helpers.format_currency(value, settings));
 							}
-						});
+						}
 					} else {
-
 						if ($element.is(':input')) {
 							$element.val(helpers.format_currency(value, settings));
 						} else {
 							$element.html(helpers.format_currency(value, settings));
 						}
-
 					}
 				});
 			},
 		};
 
 		var helpers = {
+			convert_amount_currency_to: function(amount, from, to) {
+				if (!currencyRates.rates[to]) {
+					return amount;
+				}
+
+				rate = currencyRates.rates[to];
+
+				if (from === currencyRates['base']) {
+					base = amount;
+				} else {
+					if (!currencyRates.rates[from]) {
+						return amount;
+					}
+
+					base = amount / currencyRates.rates[from];
+				}
+
+				return base * rate;
+			},
+
+			convert: function(amount, from, to) {
+				amount = amount.replace(/[^0-9\.]/g, '');
+				from = from.length === 3 ? from : '';
+				to = to.length === 3 ? to : '';
+
+				if (!from || !to || !amount || from === to) {
+					// Missing entry param or from and to currencies are identical.
+					return amount;
+				}
+
+				return helpers.convert_amount_currency_to(amount, from, to);
+			},
+
 			format_currency: function(amount, settings) {
 				var bc = settings.region;
 				var currency_before = '';
@@ -209,7 +253,7 @@
 		hidePostfix: false, // Hide any postfix
 		convertFrom: "", // If converting, the 3 digit ISO code you want to convert from,
 		convertLoading: "(Converting...)", // Loading message appended to values while converting
-		convertLocation: "convert.php" // Location of convert.php file
+		convertLocation: "convert.php", // Location of convert.php file
 	};
 
 	$.fn.currency.settings = {};
