@@ -95,7 +95,7 @@
 			},
 
 			convert: function(amount, from, to) {
-				amount = amount.replace(/[^0-9\.]/g, '');
+				amount = amount.replace(/[^0-9\.]/g, '').replace(/^./, '');
 				from = from.length === 3 ? from : '';
 				to = to.length === 3 ? to : '';
 
