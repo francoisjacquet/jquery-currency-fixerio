@@ -10,7 +10,7 @@ require_once 'functions.inc.php';
 
 $rates = get_currency_rates_from_file( CURRENCY_FILE_PATH );
 
-$date = $rates['date'];
+$date = ! empty( $rates['date'] ) ? $rates['date'] : '';
 
 if ( ! $rates
 	|| ( $date < date( 'Y-m-d' ) && ! empty( CURRENCY_API_KEY ) ) )
